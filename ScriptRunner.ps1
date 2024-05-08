@@ -1,4 +1,4 @@
-# Create a GUI with a button
+# PATHTOSCRIPT1 - Replace with Path to the script you want the button to run.
 
 Add-Type -AssemblyName System.Windows.Forms
 $form = New-Object System.Windows.Forms.Form
@@ -11,7 +11,7 @@ $button.Size = New-Object System.Drawing.Size(150,50)
 $button.Text = "Run Script"
 $button.Add_Click({
     # Specify the path to the script you want to run
-    $scriptPath = "C:\Path\to\your\script.ps1"
+    $scriptPath = "PATHTOSCRIPT1"
     # Run the script
     & $scriptPath
 })
