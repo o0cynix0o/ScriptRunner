@@ -53,4 +53,4 @@ $button4.Add_Click({
 
 $form.Controls.Add($button4)
 
-$form.ShowDialog() | Out-Null
+$form.ShowDialog()
