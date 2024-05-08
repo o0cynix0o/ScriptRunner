@@ -12,6 +12,7 @@ $button.Text = "Run Script"
 $button.Add_Click({
     # Specify the path to the script you want to run
     $scriptPath = "PATHTOSCRIPT1"
+    
     # Run the script
     & $scriptPath
 })
