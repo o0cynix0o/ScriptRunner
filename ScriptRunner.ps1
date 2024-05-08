@@ -1,56 +1,43 @@
 Add-Type -AssemblyName System.Windows.Forms
 
+# Define script paths
+$scriptPath1 = "ScriptPath1"
+$scriptPath2 = "ScriptPath2"
+$scriptPath3 = "ScriptPath3"
+$scriptPath4 = "ScriptPath4"
+
+# Define button names
+$buttonName1 = "ButtonName1"
+$buttonName2 = "ButtonName2"
+$buttonName3 = "ButtonName3"
+$buttonName4 = "ButtonName4"
+
+# Create form
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "Script Runner"
-$form.Size = New-Object System.Drawing.Size(400,400)
+$form.Size = New-Object System.Drawing.Size(400, 400)
 
-$scriptPath1 = "G:\Scripts\Testing\EmbyRestart\Emby Restart.ps1"
-$scriptPath2 = "G:\Scripts\Testing\qBittorrentRestart\qBittorrent Restart.ps1"
-$scriptPath3 = "G:\Scripts\Testing\MusicDownloader\MusicDownloader.ps1"
-$scriptPath4 = "G:\Scripts\Testing\VideoDownloader\VideoDownloader.ps1"
+# Function to run script
+function RunScript($scriptPath) {
+    & $scriptPath
+}
 
-$button1 = New-Object System.Windows.Forms.Button
-$button1.Location = New-Object System.Drawing.Point(100, 50)
-$button1.Size = New-Object System.Drawing.Size(200, 50)
-$button1.Text = "Emby Restart"
+# Create buttons
+for ($i = 1; $i -le 4; $i++) {
+    $button = New-Object System.Windows.Forms.Button
+    $button.Location = New-Object System.Drawing.Point(100, 50 + ($i - 1) * 60)
+    $button.Size = New-Object System.Drawing.Size(200, 50)
+    $button.Text = "Button $i"
 
-$button1.Add_Click({
-    & $scriptPath1
-})
+    $scriptPath = Get-Variable -Name "scriptPath$i" -ValueOnly
+    $buttonName = Get-Variable -Name "buttonName$i" -ValueOnly
 
-$form.Controls.Add($button1)
+    $button.Add_Click({
+        RunScript $scriptPath
+    })
 
-$button2 = New-Object System.Windows.Forms.Button
-$button2.Location = New-Object System.Drawing.Point(100, 110)
-$button2.Size = New-Object System.Drawing.Size(200, 50)
-$button2.Text = "qBittorrent Restart"
+    $form.Controls.Add($button)
+}
 
-$button2.Add_Click({
-    & $scriptPath2
-})
-
-$form.Controls.Add($button2)
-
-$button3 = New-Object System.Windows.Forms.Button
-$button3.Location = New-Object System.Drawing.Point(100, 170)
-$button3.Size = New-Object System.Drawing.Size(200, 50)
-$button3.Text = "Music Downloader"
-
-$button3.Add_Click({
-    & $scriptPath3
-})
-
-$form.Controls.Add($button3)
-
-$button4 = New-Object System.Windows.Forms.Button
-$button4.Location = New-Object System.Drawing.Point(100, 230)
-$button4.Size = New-Object System.Drawing.Size(200, 50)
-$button4.Text = "Video Downloader"
-
-$button4.Add_Click({
-    & $scriptPath4
-})
-
-$form.Controls.Add($button4)
-
+# Show form
 $form.ShowDialog()
