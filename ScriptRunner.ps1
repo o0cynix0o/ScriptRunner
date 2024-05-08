@@ -1,43 +1,61 @@
 Add-Type -AssemblyName System.Windows.Forms
 
-# Define script paths
+$form = New-Object System.Windows.Forms.Form
+$form.Text = "Script Runner"
+$form.Size = New-Object System.Drawing.Size(400,400)
+
 $scriptPath1 = "ScriptPath1"
 $scriptPath2 = "ScriptPath2"
 $scriptPath3 = "ScriptPath3"
 $scriptPath4 = "ScriptPath4"
 
-# Define button names
-$buttonName1 = "ButtonName1"
-$buttonName2 = "ButtonName2"
-$buttonName3 = "ButtonName3"
-$buttonName4 = "ButtonName4"
+$buttonname1 = "Name Your Button Here"
+$buttonname2 = "Name Your Button Here"
+$buttonname3 = "Name Your Button Here"
+$buttonname4 = "Name Your Button Here"
 
-# Create form
-$form = New-Object System.Windows.Forms.Form
-$form.Text = "Script Runner"
-$form.Size = New-Object System.Drawing.Size(400, 400)
+$button1 = New-Object System.Windows.Forms.Button
+$button1.Location = New-Object System.Drawing.Point(100, 50)
+$button1.Size = New-Object System.Drawing.Size(200, 50)
+$button1.Text = "$buttonname1"
 
-# Function to run script
-function RunScript($scriptPath) {
-    & $scriptPath
-}
+$button1.Add_Click({
+    & $scriptPath1
+})
 
-# Create buttons
-for ($i = 1; $i -le 4; $i++) {
-    $button = New-Object System.Windows.Forms.Button
-    $button.Location = New-Object System.Drawing.Point(100, 50 + ($i - 1) * 60)
-    $button.Size = New-Object System.Drawing.Size(200, 50)
-    $button.Text = "Button $i"
+$form.Controls.Add($button1)
 
-    $scriptPath = Get-Variable -Name "scriptPath$i" -ValueOnly
-    $buttonName = Get-Variable -Name "buttonName$i" -ValueOnly
+$button2 = New-Object System.Windows.Forms.Button
+$button2.Location = New-Object System.Drawing.Point(100, 110)
+$button2.Size = New-Object System.Drawing.Size(200, 50)
+$button2.Text = "$buttonname2"
 
-    $button.Add_Click({
-        RunScript $scriptPath
-    })
+$button2.Add_Click({
+    & $scriptPath2
+})
 
-    $form.Controls.Add($button)
-}
+$form.Controls.Add($button2)
 
-# Show form
+$button3 = New-Object System.Windows.Forms.Button
+$button3.Location = New-Object System.Drawing.Point(100, 170)
+$button3.Size = New-Object System.Drawing.Size(200, 50)
+$button3.Text = "$buttonname3"
+
+$button3.Add_Click({
+    & $scriptPath3
+})
+
+$form.Controls.Add($button3)
+
+$button4 = New-Object System.Windows.Forms.Button
+$button4.Location = New-Object System.Drawing.Point(100, 230)
+$button4.Size = New-Object System.Drawing.Size(200, 50)
+$button4.Text = "$buttonname4"
+
+$button4.Add_Click({
+    & $scriptPath4
+})
+
+$form.Controls.Add($button4)
+
 $form.ShowDialog()
