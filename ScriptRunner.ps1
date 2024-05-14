@@ -1,40 +1,14 @@
 Add-Type -AssemblyName System.Windows.Forms
 
-function New-Button {
-    param (
-        [string]$Name,
-        [string]$Text,
-        [string]$ScriptPath,
-        [int]$LocationX,
-        [int]$LocationY
-    )
-
-    $button = New-Object System.Windows.Forms.Button
-    $button.Location = New-Object System.Drawing.Point($LocationX, $LocationY)
-    $button.Size = New-Object System.Drawing.Size(200, 50)
-    $button.Text = $Text
-
-    $button.Add_Click({
-        & $ScriptPath
-    })
-
-    $button.Name = $Name
-
-    return $button
-}
-
-$form = New-Object System.Windows.Forms.Form
-$form.Text = "Script Runner v1.1.0" # App version number changed here
-$form.Size = New-Object System.Drawing.Size(400, 400)
-
-# Define script paths and button names here
+# Define script paths
 $ScriptPaths = @(
-    "ScriptPath1",
-    "ScriptPath2",
-    "ScriptPath3",
-    "ScriptPath4"
+    "G:\Scripts\Script1.ps1",
+    "G:\Scripts\Script2.ps1",
+    "G:\Scripts\Script3.ps1",
+    "G:\Scripts\Script4.ps1"
 )
 
+# Define button names
 $ButtonNames = @(
     "Button 1",
     "Button 2",
@@ -42,10 +16,29 @@ $ButtonNames = @(
     "Button 4"
 )
 
-# Create buttons dynamically
+# Create form
+$form = New-Object System.Windows.Forms.Form
+$form.Text = "Script Runner"
+$form.Size = New-Object System.Drawing.Size(300, 275)
+$form.StartPosition = "CenterScreen"
+
+# Create buttons
 for ($i = 0; $i -lt $ScriptPaths.Count; $i++) {
-    $button = New-Button -Name "button$i" -Text $ButtonNames[$i] -ScriptPath $ScriptPaths[$i] -LocationX 100 -LocationY (50 + $i * 60)
+    $button = New-Object System.Windows.Forms.Button
+    $button.Location = New-Object System.Drawing.Point(50, (30 + $i * 50))
+    $button.Size = New-Object System.Drawing.Size(200, 30)
+    $button.Text = $ButtonNames[$i]
+    
+    # Define click event handler for each button
+    switch ($i) {
+        0 { $button.Add_Click({ & $ScriptPaths[0] }) }
+        1 { $button.Add_Click({ & $ScriptPaths[1] }) }
+        2 { $button.Add_Click({ & $ScriptPaths[2] }) }
+        3 { $button.Add_Click({ & $ScriptPaths[3] }) }
+    }
+
     $form.Controls.Add($button)
 }
 
-$form.ShowDialog()
+# Show form
+$form.ShowDialog() | Out-Null
